@@ -43,8 +43,7 @@ for (i in 1:num_countries) {
    country_ex <- vector(mode = 'list', length = length(start.intervals)*N_boot)
    
    # Loop over time with intervals equal to year.window
-   for (j in 1:length(start.intervals)) {
-      
+   for (j in 1:length(start.intervals)) {      
       start.year <- start.intervals[j]
       start.date <- ymd(paste0(start.year, Emonth, Eday))
       end.date <- ymd(paste0(start.year + interval, Emonth, Eday))
