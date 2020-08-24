@@ -95,7 +95,8 @@ LE_Gompertz_PH_45 <- LE_Gompertz_PH_45_boot %>% group_by(country, year) %>%
              ul_male = quantile(expect_male, 0.975, na.rm = TRUE),
              ll_female = quantile(expect_female, 0.025, na.rm = TRUE),
              mean_female = mean(expect_female, na.rm = TRUE),
-             ul_female = quantile(expect_female, 0.975, na.rm = TRUE)) %>%
+             ul_female = quantile(expect_female, 0.975, na.rm = TRUE)
+   ) %>%
    arrange(country, year)
 
 save(LE_Gompertz_PH_45, file='data/LifeExpectancyPoliticiansGompertzPH_shifting_sex_10years_CI.RData')
