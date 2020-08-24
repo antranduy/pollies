@@ -89,7 +89,8 @@ save(LE_Gompertz_PH_45_boot, file='data/LifeExpectancyPoliticiansGompertzPH_shif
 write.csv(LE_Gompertz_PH_45_boot, 'LifeExpectancyPoliticiansGompertzPH_shifting_sex_10years_boot.csv', row.names = FALSE)
 
 # Estimate lower and upper bounds of the 95% CI of the life expectancy -------------------------------------------------
-LE_Gompertz_PH_45 <- LE_Gompertz_PH_45_boot %>% group_by(country, year) %>%
+LE_Gompertz_PH_45 <- LE_Gompertz_PH_45_boot %>% 
+   group_by(country, year) %>%
    summarise(ll_male = quantile(expect_male, 0.025, na.rm = TRUE), 
              mean_male = mean(expect_male, na.rm = TRUE),
              ul_male = quantile(expect_male, 0.975, na.rm = TRUE),
