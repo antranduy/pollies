@@ -160,12 +160,13 @@ expectancy_boot <- inner_join(LE_Gompertz_PH_45_boot, expectancy,
 plot.data <- expectancy_boot %>% group_by(country, year) %>%
    summarise(ll_dif = quantile(expect_dif, 0.025, na.rm = TRUE), 
              dif = mean(expect_dif, na.rm = TRUE),
-             ul_dif = quantile(expect_dif, 0.975, na.rm = TRUE)) %>%
+             ul_dif = quantile(expect_dif, 0.975, na.rm = TRUE)
+   ) %>%
    arrange(country, year) %>%
    ungroup()
 
 # Data for max, min and 95% CI
-stats.extremes <- group_by(plot.data, country) %>% # stats on min/max 
+stats.extremes <- group_by(plot.data, country) %>%
    summarise(min = sprintf('%0.1f', min(dif, na.rm = TRUE)),               
              max = sprintf('%0.1f', max(dif, na.rm = TRUE)),
              LL.min = sprintf('%0.1f', ll_dif[which.min(dif)]),
