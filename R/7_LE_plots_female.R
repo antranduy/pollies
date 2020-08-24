@@ -160,7 +160,8 @@ expectancy_boot <- inner_join(LE_Gompertz_PH_45_boot, expectancy,
 plot.data <- expectancy_boot %>% group_by(country, year) %>%
    summarise(ll_dif = quantile(expect_dif, 0.025, na.rm = TRUE), 
              dif = mean(expect_dif, na.rm = TRUE),
-             ul_dif = quantile(expect_dif, 0.975, na.rm = TRUE)) %>%
+             ul_dif = quantile(expect_dif, 0.975, na.rm = TRUE)
+   ) %>%
    arrange(country, year) %>%
    ungroup()
 
