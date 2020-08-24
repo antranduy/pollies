@@ -17,8 +17,7 @@ masterpath <- 'C:/Users/adtran/OneDrive - The University of Melbourne/Politician
 setwd(masterpath)
 # list of countries
 source('0_Country_list.R')
-for (country in countries) {
-   
+for (country in countries) {   
    # Load politicians and life table data
    setwd(paste('Data/', country, sep =''))
    filenames = dir(pattern = country)
