@@ -26,7 +26,7 @@ LE_Gompertz_PH_45_boot <- vector(mode = 'list', length = num_countries) # Alloca
 N_boot <- 1000                                                          # Number of boostrap replications
 
 # Loop through countries
-for (i in 1:num_countries){
+for (i in 1:num_countries) {
    
    ctry <- countries[i] 
    politicians <- dplyr::filter(allPoliticians, country == ctry)
@@ -46,7 +46,7 @@ for (i in 1:num_countries){
    country_ex <- vector(mode = 'list', length = length(start.intervals)*N_boot)
    
    # Loop over time with intervals equal to year.window
-   for (j in 1:length(start.intervals)){
+   for (j in 1:length(start.intervals)) {
       
       start.year <- start.intervals[j]
       start.date <- ymd(paste0(start.year, Emonth, Eday))
