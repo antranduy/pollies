@@ -148,10 +148,12 @@ expectancy_boot <- inner_join(LE_Gompertz_PH_45_boot, expectancy,
    mutate(expect_dif = expect_pol - expect_gen)
 
 # 95% CI of the difference in LE
-plot.data <- expectancy_boot %>% group_by(country, year) %>%
+plot.data <- expectancy_boot %>% 
+   group_by(country, year) %>%
    summarise(ll_dif = quantile(expect_dif, 0.025, na.rm = TRUE), 
              dif = mean(expect_dif, na.rm = TRUE),
-             ul_dif = quantile(expect_dif, 0.975, na.rm = TRUE)) %>%
+             ul_dif = quantile(expect_dif, 0.975, na.rm = TRUE)
+   ) %>%
    arrange(country, year) %>%
    ungroup()
 
@@ -163,8 +165,7 @@ stats.extremes <- group_by(plot.data, country) %>% # stats on min/max
              UL.min = sprintf('%0.1f', ul_dif[which.min(dif)]),
              LL.max = sprintf('%0.1f', ll_dif[which.max(dif)]),
              UL.max = sprintf('%0.1f', ul_dif[which.max(dif)])
-   ) %>%
-   
+   ) %>%   
    mutate(
       ll_dif = 0, # Needed for plot, as this is used for mapping in aes() in ggplot()
       ul_dif = 0, # Needed for plot, as this is used for mapping in aes() in ggplot()
