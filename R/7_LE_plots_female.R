@@ -165,7 +165,7 @@ plot.data <- expectancy_boot %>% group_by(country, year) %>%
    ungroup()
 
 # Data for max, min
-stats.extremes <- group_by(plot.data, country) %>% # stats on min/max 
+stats.extremes <- group_by(plot.data, country) %>% 
    summarise(min = sprintf('%0.1f', min(dif, na.rm = TRUE)),               
              max = sprintf('%0.1f', max(dif, na.rm = TRUE)),
              LL.min = sprintf('%0.1f', ll_dif[which.min(dif)]),
