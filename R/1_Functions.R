@@ -6,7 +6,7 @@
 #-----------------------------------------------------------------------------------------------------------------------
 
 # Survival rate function, pooling males and females----------------------------------------------------------------------
-# Compute survival rate at time t after baseline age, pooling males and females 
+# Compute survival rate at time t after baseline age
 # Arguments:
 #   origin: the origin argument in Surv() function in the package survival
 #   par: a vector of shape and constant parameters of the Gompert proportional hazard model 
@@ -24,7 +24,7 @@ surv_pooled <- function(origin, par, age, t) {
 }
 
 # Life expectancy function, pooling males and females -------------------------------------------------------------------
-# Compute life expectancy conditional on having lived to a specific age, pooling males and females 
+# Compute life expectancy conditional on having lived to a specific age
 # Arguments: 
 #   origin: the origin argument in Surv() function in the package survival
 #   par: a vector of shape and constant parameters of the Gompert proportional hazard model 
