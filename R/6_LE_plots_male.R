@@ -219,6 +219,4 @@ p
 
 jpeg('LE_GAP_at_45_male.jpg', width = 2800, height = 2800, res = 300, quality = 100)
 print(p)
-dev.off()  
-
-
+dev.off()
