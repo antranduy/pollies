@@ -42,9 +42,11 @@ for (country in countries) {
                 YOB = year(DOB),					   
                 year_entered = year(Date_entered),
                 YOD = year(DOD),
-                country = country) %>%
+                country = country
+         ) %>%
          dplyr::filter(!is.na(fu_years), 
-                year_entered >= 1700 & year_entered <= 2020)	
+                       year_entered >= 1700 & year_entered <= 2020
+         )	
    )
    save(list = new_name_pol, file = paste(new_name_pol, '.RData', sep = ''))
    setwd('../..')
