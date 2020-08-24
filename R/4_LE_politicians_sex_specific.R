@@ -26,8 +26,7 @@ LE_Gompertz_PH_45_boot <- vector(mode = 'list', length = num_countries) # Alloca
 N_boot <- 1000                                                          # Number of boostrap replications
 
 # Loop through countries
-for (i in 1:num_countries) {
-   
+for (i in 1:num_countries) {   
    ctry <- countries[i] 
    politicians <- dplyr::filter(allPoliticians, country == ctry)
    interval <- 10
@@ -46,17 +45,16 @@ for (i in 1:num_countries) {
    country_ex <- vector(mode = 'list', length = length(start.intervals)*N_boot)
    
    # Loop over time with intervals equal to year.window
-   for (j in 1:length(start.intervals)) {
-      
+   for (j in 1:length(start.intervals)) {      
       start.year <- start.intervals[j]
       start.date <- ymd(paste0(start.year, Emonth, Eday))
-      end.date <- ymd(paste0(start.year + interval, Emonth, Eday))
-      
+      end.date <- ymd(paste0(start.year + interval, Emonth, Eday))      
       
       fitting_data <- dplyr::filter(politicians, Date_entered <= end.date)
       fitting_data$Date_entered <- if_else(fitting_data$Date_entered < start.date, start.date, fitting_data$Date_entered)
       fitting_data$age_entered_years <- as.numeric(fitting_data$Date_entered  - fitting_data$DOB)/365.25
       fitting_data <- dplyr::filter(fitting_data, age_entered_years < age_end_years)
+      
       # Sample politicians with replacement and fit the model to the bootstrapped sample
       for (b in 1:N_boot) {
          idc <- sample(1:nrow(fitting_data), replace = TRUE)
