@@ -1,6 +1,6 @@
 #-----------------------------------------------------------------------------------------------------------------------
-# Purpose: Create survival data for all politicians in 11 countries using data compiled by Adrian Barnett. See R code
-#          for data compilation at https://github.com/agbarnett/pollies/tree/master/R
+# Purpose: Compile survival data for all politicians in 11 countries using data compiled by Adrian Barnett. See R code
+#          for compilation of politician data at https://github.com/agbarnett/pollies/tree/master/R
 # Author : An Tran-Duy
 # Date   : 24 January 2020
 # Place  : Melbourne, Australia
