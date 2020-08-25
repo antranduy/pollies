@@ -1,6 +1,6 @@
 #-----------------------------------------------------------------------------------------------------------------------
-# Purpose: Estimate life expectancy and 95% CI of politicians in different countries over consecutive 10-year periods,
-#          pooling males and females
+# Purpose: Estimate life expectancies and their 95% CIs of politicians in different countries over consecutive 
+#          10-year periods, pooling males and females
 # Author : An Tran-Duy - University of Melbourne
 # Date   : 1 February 2020
 # Place  : Melbourne
