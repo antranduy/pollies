@@ -182,7 +182,7 @@ stats.extremes <- group_by(plot.data, country) %>%
                     sep = '') 
    )
 
-#Create data for legend on the first plot (no country)
+# Create data for legend on the first plot (no country)
 legend <- slice(plot.data, 1) %>% mutate(country = '', year = NA, dif = 0, ll_dif = 0, ul_dif = 0)
 
 plot.data.legend <- bind_rows(legend, plot.data)   
