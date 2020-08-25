@@ -14,7 +14,7 @@ setwd('C:/Users/adtran/OneDrive - The University of Melbourne/Politicians longev
 # Plot absolute life expectancies for females --------------------------------------------------------------------------
 
 # Load life expectancy data from the general population. Data compiled by Adrian Barnett
-load('ConditionalLifeExpectancyPopulation.RData')
+load('LifeExpectancyGeneralPopulationWeighted.Rdata')
 # Load life expectancy data from politicians
 load('LifeExpectancyPoliticiansGompertzPH_shifting_sex_10years_CI.RData') 
 
