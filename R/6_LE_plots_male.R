@@ -11,7 +11,7 @@ remove(list = ls())
 
 setwd('C:/Users/adtran/OneDrive - The University of Melbourne/Politicians longevity/GitHub/Data')
 
-# Absolute life expectancy plot for male -------------------------------------------------------------------------------
+# Plotting absolute life expectancies for male -------------------------------------------------------------------------
 
 # Load life expectancy data from the general population. Data compiled by Adrian Barnett
 load('ConditionalLifeExpectancyPopulation.RData')
@@ -53,7 +53,7 @@ head(plot.data)
 plot.data <- dplyr::rename(plot.data, Population = time)
 plot.data$Population <- factor(plot.data$Population, levels = c('Politicians', 'General population'))
 
-# Get life expectancy in the last years for reporting in the manuscript
+# Get life expectancies in the last years for reporting in the manuscript
 dlast <- arrange(plot.data, country, years) %>% group_by(country) %>% slice(n())
 
 # Data for max, min
@@ -131,8 +131,7 @@ jpeg('LE_at_45_male.jpg', width = 2800, height = 2800, res = 300, quality = 100)
 print(p)
 dev.off()  
 
-
-# Difference in life expectancy plot -----------------------------------------------------------------------------------
+# Plotting difference in life expectancies for males--------------------------------------------------------------------
 remove(list = ls())
 setwd('C:/Users/adtran/OneDrive - The University of Melbourne/Politicians longevity/GitHub/Data')
 
