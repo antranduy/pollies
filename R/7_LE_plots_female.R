@@ -1,5 +1,5 @@
 #-----------------------------------------------------------------------------------------------------------------------
-# Purpose: Plot absolute life expectancies and gaps between politicians and general population for females
+# Purpose: Plot absolute life expectancies (LEs) and gaps in LEs between politicians and general population for females
 # Author : An Tran-Duy
 # Date   : 26 February 2020
 # Place  : Melbourne, Australia
@@ -11,7 +11,7 @@ remove(list = ls())
 
 setwd('C:/Users/adtran/OneDrive - The University of Melbourne/Politicians longevity/GitHub/Data')
 
-# Absolute life expectancy plot for male -------------------------------------------------------------------------------
+# Plot absolute life expectancies for females --------------------------------------------------------------------------
 
 # Load life expectancy data from the general population. Data compiled by Adrian Barnett
 load('ConditionalLifeExpectancyPopulation.RData')
@@ -131,8 +131,7 @@ jpeg('LE_at_45_female.jpg', width = 2800, height = 2800, res = 300, quality = 10
 print(p)
 dev.off()  
 
-
-# Difference in life expectancy plot -----------------------------------------------------------------------------------
+# Plot difference in life expectancies ---------------------------------------------------------------------------------
 remove(list = ls())
 setwd('C:/Users/adtran/OneDrive - The University of Melbourne/Politicians longevity/GitHub/Data')
 
