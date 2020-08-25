@@ -1,5 +1,5 @@
 #-----------------------------------------------------------------------------------------------------------------------
-# Purpose: Plot absolute life expectancies and gaps between politicians and general population for males
+# Purpose: Plot absolute life expectancies (LEs) and gaps in LEs between politicians and general population for males
 # Author : An Tran-Duy
 # Date   : 26 February 2020
 # Place  : Melbourne, Australia
