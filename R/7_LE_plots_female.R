@@ -131,7 +131,7 @@ jpeg('LE_at_45_female.jpg', width = 2800, height = 2800, res = 300, quality = 10
 print(p)
 dev.off()  
 
-# Plot difference in life expectancies ---------------------------------------------------------------------------------
+# Plot difference in life expectancies for females----------------------------------------------------------------------
 remove(list = ls())
 setwd('C:/Users/adtran/OneDrive - The University of Melbourne/Politicians longevity/GitHub/Data')
 
