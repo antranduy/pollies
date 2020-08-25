@@ -11,7 +11,7 @@ remove(list = ls())
 
 setwd('C:/Users/adtran/OneDrive - The University of Melbourne/Politicians longevity/GitHub/Data')
 
-# Plotting absolute life expectancies------------------------------------------------------------------------------------
+# Plot absolute life expectancies --------------------------------------------------------------------------------------
 
 # Load life expectancy data from the general population. Data compiled by Adrian Barnett
 load('ConditionalLifeExpectancyPopulation.RData') # 
@@ -125,8 +125,7 @@ jpeg('LE_at_45_pooled_sexes.jpg', width = 2800, height = 2800, res = 300, qualit
 print(p)
 dev.off()  
 
-
-# Plotting difference in life expectancy ---------------------------------------------------------------------------------
+# Plot differences in life expectancies --------------------------------------------------------------------------------
 remove(list = ls())
 setwd('C:/Users/adtran/OneDrive - The University of Melbourne/Politicians longevity/GitHub/Data')
 
