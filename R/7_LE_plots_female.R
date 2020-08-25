@@ -136,8 +136,8 @@ remove(list = ls())
 setwd('C:/Users/adtran/OneDrive - The University of Melbourne/Politicians longevity/GitHub/Data')
 
 # Load data
-load('LifeExpectancyGeneralPopulationWeighted.Rdata') # 
-load('LifeExpectancyPoliticiansGompertzPH_shifting_sex_10years_BOOT.RData') # 
+load('LifeExpectancyGeneralPopulationWeighted.Rdata')
+load('LifeExpectancyPoliticiansGompertzPH_shifting_sex_10years_BOOT.RData')
 
 LE_Gompertz_PH_45_boot$country <- as.character(LE_Gompertz_PH_45_boot$country)
 LE_Gompertz_PH_45_boot <- LE_Gompertz_PH_45_boot %>%
