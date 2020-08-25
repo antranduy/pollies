@@ -131,7 +131,7 @@ jpeg('LE_at_45_male.jpg', width = 2800, height = 2800, res = 300, quality = 100)
 print(p)
 dev.off()  
 
-# Plot difference in life expectancies for males------------------------------------------------------------------------
+# Plot differences in life expectancies for males-----------------------------------------------------------------------
 remove(list = ls())
 setwd('C:/Users/adtran/OneDrive - The University of Melbourne/Politicians longevity/GitHub/Data')
 
@@ -182,7 +182,7 @@ stats.extremes <- group_by(plot.data, country) %>%
                     sep = '') 
    )
 
-#Create data for legend on the first plot (no country)
+# Create data for legend on the first plot (no country)
 legend <- slice(plot.data, 1) %>% mutate(country = '', year = NA, dif = 0, ll_dif = 0, ul_dif = 0)
 
 plot.data.legend <- bind_rows(legend, plot.data)   
