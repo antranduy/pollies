@@ -1,7 +1,7 @@
 #-----------------------------------------------------------------------------------------------------------------------
-# Purpose: Plot absolute life expectancies (LEs) and gaps in LEs between politicians and general population using pooled-sex data
+# Purpose: Plot absolute life expectancies (LEs) and gaps in LEs between politicians and general population for pooled sexes
 # Author : An Tran-Duy
-# Date   : 25 February 2020
+# Date   : 25 April 2020
 # Place  : Melbourne, Australia
 #-----------------------------------------------------------------------------------------------------------------------
 library(dplyr)
@@ -13,32 +13,44 @@ setwd('C:/Users/adtran/OneDrive - The University of Melbourne/Politicians longev
 
 # Plot absolute life expectancies --------------------------------------------------------------------------------------
 
-# Load life expectancy data from the general population. Data compiled by Adrian Barnett
-load('LifeExpectancyGeneralPopulationWeighted.Rdata') # 
+# Load life expectancy data from the general population
+load('LifeExpectancyGeneralPopulation_sex_wide.Rdata')
 # Load life expectancy data from politicians
-load('LifeExpectancyPoliticiansGompertzPH_shifting_10years_CI.RData')
+load('LifeExpectancyPoliticiansGompertzPH_shifting_10years_BOOT.RData')
 
-expectancy <- expectancy %>% mutate(country = replace(country, country == 'NZ', 'New Zealand'))
+expectancy <- expectancy_sex_wide %>% mutate(country = replace(country, country == 'NZ', 'New Zealand'))
 
 # Exclude rows with NA for politicians life expectancy (time window when sample size = 0)
-LE_Gompertz_PH_45 <- dplyr::filter(LE_Gompertz_PH_45, !is.na(expect_pol)) %>%
-   mutate(country = as.character(country), country = replace(country, country == 'New_Zealand', 'New Zealand'))
+LE_Gompertz_PH_45 <- dplyr::filter(LE_Gompertz_PH_45_boot, !is.na(expect)) %>%
+   mutate(country = as.character(country), 
+          country = replace(country, country == 'New_Zealand', 'New Zealand'),
+          female.prop = n_female/N,
+          male.prop = 1 - female.prop
+   )
 
-# Restricting the general population to the years in the politicians data set
-expectancy1 <- merge(expectancy, LE_Gompertz_PH_45, 
-                     by.x = c('country', 'years'), by.y = c('country', 'year'), 
-                     all.x = FALSE)
+expectancy1 <- inner_join(LE_Gompertz_PH_45, expectancy, by = c('country' = 'country', 'year' = 'years')) %>%
+   mutate(expect_weighted = male.prop*expect.Male + female.prop*expect.Female) %>%
+   group_by(country, year) %>%
+   summarise(ll_pol = quantile(expect, 0.025, na.rm = TRUE), 
+             expect_pol = mean(expect, na.rm = TRUE),
+             ul_pol = quantile(expect, 0.975, na.rm = TRUE),
+             expect_gen = mean(expect_weighted, na.rm = TRUE)
+   ) %>%
+   select(country, year, ll_pol, expect_pol, ul_pol, expect_gen) %>%
+   arrange(country, year) %>%
+   ungroup()
 
-expectancy1$ll_gen <- expectancy1$ul_gen <-  NA
+expectancy1$ul_gen <- expectancy1$ll_gen <-  NA
 
 # Change to long shape
 plot.data <- reshape(expectancy1, 
-                     varying = list(c('expect', 'expect_pol'), 
+                     varying = list(c('expect_gen', 'expect_pol'), 
                                     c('ll_gen', 'll_pol'),
                                     c('ul_gen', 'ul_pol')
                      ), 
                      v.names = c('expect', 'LL', 'UL'),
                      times = c('General population', 'Politicians'),
+                     idvar = c('country', 'year'),
                      direction = 'long'
 )
 
@@ -48,7 +60,7 @@ plot.data <- dplyr::rename(plot.data, Population = time)
 plot.data$Population <- factor(plot.data$Population, levels = c('Politicians', 'General population'))
 
 # Get life expectancies in the last years for reporting in the manuscript
-dlast <- arrange(plot.data, country, years) %>% group_by(country) %>% slice(n())
+dlast <- arrange(plot.data, country, year) %>% group_by(country) %>% slice(n())
 
 # Data for max, min
 stats.extremes <- group_by(plot.data, Population, country) %>%
@@ -80,21 +92,21 @@ stats.gen <- dplyr::filter(stats, Population == 'General population') %>%
    )
 
 # Create data for legend on the first plot (no country)
-legend <- slice(plot.data, 1:4) %>% mutate(country = '')
+legend <- dplyr::slice(plot.data, 1:4) %>% mutate(country = '')
 legend$Population[1:2] <- 'Politicians'
 start.pol <- 1888                                            # x coordinate of the start of the politician legend line
 start.gen <- 1963                                            # x coordinate of the start of the general population legend line
 line.length <- 20
-legend$years[1:2] <- c(start.pol, start.pol + line.length)   # x coordinates of politician legend line
+legend$year[1:2] <- c(start.pol, start.pol + line.length)   # x coordinates of politician legend line
 legend$expect[1:2] <- 41                                     # y coordinates for politician legend line
-legend$years[3:4] <- c(start.gen, start.gen + line.length)   # x coordinates for general population legend lines
+legend$year[3:4] <- c(start.gen, start.gen + line.length)   # x coordinates for general population legend lines
 legend$expect[3:4] <- 22                                     # y coordinates for general population legend lines
 
 plot.data.legend <- bind_rows(legend, plot.data)
 
 legend.fs <- 3                                               # Font size for legend
 label.fs <- 11                                               # Font size for axis and facet labels
-p <- ggplot(data = plot.data.legend, aes(x = years, y = expect, ymax = UL, ymin = LL, color = Population), size = 0.01) +
+p <- ggplot(data = plot.data.legend, aes(x = year, y = expect, ymax = UL, ymin = LL, color = Population), size = 0.01) +
    geom_ribbon(alpha = 0.2, linetype = 0) + 
    geom_line(size = 0.3) +
    geom_point(size = 1) +
@@ -121,38 +133,42 @@ p <- ggplot(data = plot.data.legend, aes(x = years, y = expect, ymax = UL, ymin 
 
 p
 
-jpeg('LE_at_45_pooled_sexes.jpg', width = 2800, height = 2800, res = 300, quality = 100)
+jpeg('LE_at_45_pooled_sexes_WEIGHTED.jpg', width = 2800, height = 2800, res = 300, quality = 100)
 print(p)
 dev.off()  
 
 # Plot differences in life expectancies --------------------------------------------------------------------------------
 remove(list = ls())
+
 setwd('C:/Users/adtran/OneDrive - The University of Melbourne/Politicians longevity/GitHub/Data')
 
-# Load data
-load('ConditionalLifeExpectancyPopulation.RData')
+# Plot absolute life expectancies --------------------------------------------------------------------------------------
+
+# Load life expectancy data from the general population
+load('LifeExpectancyGeneralPopulation_sex_wide.Rdata')
+# Load life expectancy data from politicians
 load('LifeExpectancyPoliticiansGompertzPH_shifting_10years_BOOT.RData')
 
-LE_Gompertz_PH_45_boot$country <- as.character(LE_Gompertz_PH_45_boot$country)
-LE_Gompertz_PH_45_boot <- LE_Gompertz_PH_45_boot %>%
-   rename(expect_pol = expect) %>%
-   mutate(country = as.character(country), country = replace(country, country == 'New_Zealand', 'New Zealand'))
+expectancy <- expectancy_sex_wide %>% mutate(country = replace(country, country == 'NZ', 'New Zealand'))
 
-expectancy <- expectancy %>%
-   rename(expect_gen = expect) %>%
-   mutate(country = replace(country, country == 'NZ', 'New Zealand'))
+# Exclude rows with NA for politicians life expectancy (time window when sample size = 0)
+LE_Gompertz_PH_45 <- dplyr::filter(LE_Gompertz_PH_45_boot, !is.na(expect)) %>%
+   mutate(country = as.character(country), 
+          country = replace(country, country == 'New_Zealand', 'New Zealand'),
+          female.prop = n_female/N,
+          male.prop = 1 - female.prop
+   )
 
-expectancy_boot <- inner_join(LE_Gompertz_PH_45_boot, expectancy,
-                              by = c('country' = 'country', 'year' = 'years')) %>%
-   mutate(expect_dif = expect_pol - expect_gen)
-
-# 95% CI of the difference in LE
-plot.data <- expectancy_boot %>% 
+plot.data <- inner_join(LE_Gompertz_PH_45, expectancy, by = c('country' = 'country', 'year' = 'years')) %>%
+   mutate(expect_weighted = male.prop*expect.Male + female.prop*expect.Female,
+          expect_dif = expect - expect_weighted
+   ) %>%
    group_by(country, year) %>%
    summarise(ll_dif = quantile(expect_dif, 0.025, na.rm = TRUE), 
              dif = mean(expect_dif, na.rm = TRUE),
              ul_dif = quantile(expect_dif, 0.975, na.rm = TRUE)
    ) %>%
+   select(country, year, ll_dif, dif, ul_dif) %>%
    arrange(country, year) %>%
    ungroup()
 
@@ -209,6 +225,6 @@ p <- ggplot(data = plot.data.legend, aes(x = year, y = dif, ymin = ll_dif, ymax 
 
 p
 
-jpeg('LE_GAP_at_45_pooled_sexes.jpg', width = 2800, height = 2800, res = 300, quality = 100)
+jpeg('LE_GAP_at_45_pooled_sexes_WEIGHTED.jpg', width = 2800, height = 2800, res = 300, quality = 100)
 print(p)
 dev.off()
