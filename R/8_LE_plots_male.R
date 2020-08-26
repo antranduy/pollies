@@ -1,7 +1,7 @@
 #-----------------------------------------------------------------------------------------------------------------------
 # Purpose: Plot absolute life expectancies (LEs) and gaps in LEs between politicians and general population for males
 # Author : An Tran-Duy
-# Date   : 26 February 2020
+# Date   : 26 April 2020
 # Place  : Melbourne, Australia
 #-----------------------------------------------------------------------------------------------------------------------
 library(dplyr)
@@ -13,8 +13,8 @@ setwd('C:/Users/adtran/OneDrive - The University of Melbourne/Politicians longev
 
 # Plot absolute life expectancies for males ----------------------------------------------------------------------------
 
-# Load life expectancy data from the general population. Data compiled by Adrian Barnett
-load('LifeExpectancyGeneralPopulationWeighted.Rdata')
+# Load life expectancy data from the general population
+load('LifeExpectancyGeneralPopulation_sex_long.Rdata')
 # Load life expectancy data from politicians
 load('LifeExpectancyPoliticiansGompertzPH_shifting_sex_10years_CI.RData') 
 
@@ -24,7 +24,7 @@ LE_Gompertz_PH_45 <- dplyr::filter(LE_Gompertz_PH_45, !is.na(mean_male)) %>%
    rename(ll_pol = ll_male, expect_pol = mean_male, ul_pol = ul_male) %>%
    mutate(country = as.character(country), country = replace(country, country == 'New_Zealand', 'New Zealand'))
 
-expectancy <- expectancy.sex %>%
+expectancy <- expectancy_sex_long %>%
    dplyr::filter(sex == 'Male') %>%
    rename(expect_gen = expect) %>%
    select(-sex) %>%
@@ -136,7 +136,7 @@ remove(list = ls())
 setwd('C:/Users/adtran/OneDrive - The University of Melbourne/Politicians longevity/GitHub/Data')
 
 # Load data
-load('LifeExpectancyGeneralPopulationWeighted.Rdata')
+load('LifeExpectancyGeneralPopulation_sex_long.Rdata')
 load('LifeExpectancyPoliticiansGompertzPH_shifting_sex_10years_BOOT.RData')
 
 LE_Gompertz_PH_45_boot$country <- as.character(LE_Gompertz_PH_45_boot$country)
@@ -145,7 +145,7 @@ LE_Gompertz_PH_45_boot <- LE_Gompertz_PH_45_boot %>%
    rename(expect_pol = expect_male) %>%
    mutate(country = as.character(country), country = replace(country, country == 'New_Zealand', 'New Zealand'))
 
-expectancy <- expectancy.sex %>%
+expectancy <- expectancy_sex_long %>%
    dplyr::filter(sex == 'Male') %>%
    rename(expect_gen = expect) %>%
    select(-sex) %>%
