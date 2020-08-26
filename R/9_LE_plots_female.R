@@ -165,7 +165,7 @@ plot.data <- expectancy_boot %>% group_by(country, year) %>%
    arrange(country, year) %>%
    ungroup()
 
-# Data for max, min
+# Data for max, min and 95% CI
 stats.extremes <- group_by(plot.data, country) %>% 
    summarise(min = sprintf('%0.1f', min(dif, na.rm = TRUE)),               
              max = sprintf('%0.1f', max(dif, na.rm = TRUE)),
