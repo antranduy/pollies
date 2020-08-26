@@ -7,6 +7,7 @@
 library(dplyr)
 library(ggplot2)
 library(reshape2)
+
 remove(list = ls())
 
 setwd('C:/Users/adtran/OneDrive - The University of Melbourne/Politicians longevity/GitHub/Data')
