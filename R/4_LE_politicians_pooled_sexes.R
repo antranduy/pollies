@@ -57,7 +57,7 @@ for (i in 1:num_countries) {
          fitting_data_boot <- fitting_data[idc,]
          sample_size <- nrow(fitting_data_boot)
          num_deaths <- sum(fitting_data_boot$dead == 1)
-         num_female <- sum(fitting_data_boot$sex == 'female') # For checking the number of female in each bootstrapped sample
+         num_female <- sum(fitting_data_boot$sex == 'female') # For calculating weighted LE of the general population
          origin <- 0
          if (sample_size > 0) {
             # Fit Gompert proportional hazard model using age as time scale
@@ -80,14 +80,3 @@ LE_Gompertz_PH_45_boot <- do.call(rbind, LE_Gompertz_PH_45_boot)
 
 save(LE_Gompertz_PH_45_boot, file='data/LifeExpectancyPoliticiansGompertzPH_shifting_10years_BOOT.RData')
 write.csv(LE_Gompertz_PH_45_boot, 'LifeExpectancyPoliticiansGompertzPH_shifting_10years_boot.csv', row.names = FALSE)
-
-# Estimate lower and upper bounds of the 95% CI of the life expectancy -------------------------------------------------
-LE_Gompertz_PH_45 <- LE_Gompertz_PH_45_boot %>% 
-   group_by(country, year) %>%
-   summarise(ll_pol = quantile(expect, 0.025, na.rm = TRUE), 
-             expect_pol = mean(expect, na.rm = TRUE),
-             ul_pol = quantile(expect, 0.975, na.rm = TRUE)
-   ) %>%
-   arrange(country, year)
-
-save(LE_Gompertz_PH_45, file='data/LifeExpectancyPoliticiansGompertzPH_shifting_10years_CI.RData')
