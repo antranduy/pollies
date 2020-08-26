@@ -63,7 +63,7 @@ plot.data$Population <- factor(plot.data$Population, levels = c('Politicians', '
 # Get life expectancies in the last years for reporting in the manuscript
 dlast <- arrange(plot.data, country, year) %>% group_by(country) %>% slice(n())
 
-# Data for max, min
+# Data for max, min and 95% CI
 stats.extremes <- group_by(plot.data, Population, country) %>%
    summarise(min = sprintf('%0.1f', min(expect)),              
              max = sprintf('%0.1f', max(expect)),
