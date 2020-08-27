@@ -5,7 +5,6 @@
 # Date   : 1 April 2020
 # Place  : Melbourne, Australia
 #-----------------------------------------------------------------------------------------------------------------------
-
 library(dplyr)
 
 setwd('C:/Users/adtran/OneDrive - The University of Melbourne/Politicians longevity/GitHub/Data')
