@@ -95,13 +95,13 @@ stats.gen <- dplyr::filter(stats, Population == 'General population') %>%
 # Create data for legend on the first plot (no country)
 legend <- dplyr::slice(plot.data, 1:4) %>% mutate(country = '')
 legend$Population[1:2] <- 'Politicians'
-start.pol <- 1888                                            # x coordinate of the start of the politician legend line
-start.gen <- 1963                                            # x coordinate of the start of the general population legend line
+start.pol <- 1888                                           # x coordinate of the start of the politician legend line
+start.gen <- 1963                                           # x coordinate of the start of the general population legend line
 line.length <- 20
 legend$year[1:2] <- c(start.pol, start.pol + line.length)   # x coordinates of politician legend line
-legend$expect[1:2] <- 41                                     # y coordinates for politician legend line
+legend$expect[1:2] <- 41                                    # y coordinates for politician legend line
 legend$year[3:4] <- c(start.gen, start.gen + line.length)   # x coordinates for general population legend lines
-legend$expect[3:4] <- 22                                     # y coordinates for general population legend lines
+legend$expect[3:4] <- 22                                    # y coordinates for general population legend lines
 
 plot.data.legend <- bind_rows(legend, plot.data)
 
@@ -174,7 +174,7 @@ plot.data <- inner_join(LE_Gompertz_PH_45, expectancy, by = c('country' = 'count
    ungroup()
 
 # Data for max, min and 95% CI
-stats.extremes <- group_by(plot.data, country) %>% # stats on min/max 
+stats.extremes <- group_by(plot.data, country) %>%
    summarise(min = sprintf('%0.1f', min(dif)),               
              max = sprintf('%0.1f', max(dif)),
              LL.min = sprintf('%0.1f', ll_dif[which.min(dif)]),
