@@ -34,7 +34,7 @@ for (i in 1:num_countries) {
    mod <- (Eyear - Syear) %% interval
    Syear <- Syear + mod
    
-   #Extract day and month of the last year entered
+   # Extract day and month of the last year entered
    Eday <- format(max(politicians$Date_entered), format = '%d')
    Emonth <- format(max(politicians$Date_entered), format = '%m')
    
