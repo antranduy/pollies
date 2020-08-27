@@ -177,7 +177,7 @@ stats.extremes <- group_by(plot.data, country) %>%
    mutate(
       ll_dif = 0,              # Needed for plot, as this is used for mapping in aes() in ggplot()
       ul_dif = 0,              # Needed for plot, as this is used for mapping in aes() in ggplot()
-      year = 1920, dif = 12,    # Coordinates of the max-min box
+      year = 1920, dif = 12,   # Coordinates of the max-min box
       label = paste(max, ' (', LL.max, ', ', UL.max, ')', '\n', 
                     min, ' (', LL.min, ', ', UL.min, ')',
                     sep = '') 
