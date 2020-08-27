@@ -102,7 +102,7 @@ plot.data.legend <- bind_rows(legend, plot.data)
 legend.fs <- 3                                               # Font size for legend
 label.fs <- 11                                               # Font size for axis and facet labels
 p <- ggplot(data = plot.data.legend, aes(x = years, y = expect, ymax = UL, ymin = LL, color = Population), size = 0.01) +
-   geom_ribbon(alpha = 0.2, linetype = 0) + 
+   geom_ribbon(alpha = 0.5, fill = 'orange', linetype = 0) +
    geom_line(size = 0.3) +
    geom_point(size = 1) +
    scale_color_manual(values = c('blue', 'dark red')) +
@@ -194,10 +194,15 @@ dlast <- arrange(plot.data, country, year) %>% group_by(country) %>% slice
 legend.fs <- 3                                               # Font size for legend
 label.fs <- 11                                               # Font size for axis and facet labels
 p <- ggplot(data = plot.data.legend, aes(x = year, y = dif, ymin = ll_dif, ymax = ul_dif)) +
-   geom_hline(yintercept = 0, lty = 1, col = 'dark red', size = 0.6)+
+   geom_hline(yintercept = 0, lty = 1, col = 'dark red', size = 0.6) +
+   
+   # Add max and min values for each country ---------------------------------------
+   geom_label(data = stats.extremes, aes(x = year, y = dif, label = label), color = 'blue', size = legend.fs, hjust = 0, vjust = 1) +
+   
+   # Put the semi-transparent shaded areas on top of the max-min boxes -------------
+   geom_ribbon(alpha = 0.5, fill = 'orange', linetype = 0) +
    geom_line(size = 0.3, color = 'blue') +
    geom_point(size = 1, color = 'blue') +
-   geom_ribbon(alpha = 0.2, linetype = 0) +
    scale_x_continuous(name = 'Year', limits = c(1920, 2014)) +
    scale_y_continuous(name ='Difference in life expectancy at age 45', limits = c(-7, 12), breaks = seq(-6, 12, 3)) +
    facet_wrap(~country, ncol = 3, scales = 'free_x') +
@@ -206,9 +211,6 @@ p <- ggplot(data = plot.data.legend, aes(x = year, y = dif, ymin = ll_dif, ymax 
          strip.text = element_text(size = label.fs + 2),
          axis.title = element_text(size = label.fs + 2),
          legend.position = 'none') +
-   
-   # Add max and min values for each country ---------------------------------------
-   geom_label(data = stats.extremes, aes(x = year, y = dif, label = label), color = 'blue', size = legend.fs, hjust = 0, vjust = 1) +
    
    # Add legend to the first plot (no country) -------------------------------------
    geom_label(data = legend, aes(x = 1920, y = 12, label='Max (95% CI)\nMin (95% CI)'), size = legend.fs, color = 'blue', hjust = 0, vjust = 1) +
