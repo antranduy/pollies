@@ -16,7 +16,7 @@ remove(list = ls())
 masterpath <- 'C:/Users/adtran/OneDrive - The University of Melbourne/Politicians longevity/GitHub'
 setwd(masterpath)
 # list of countries
-source('0_Country_list.R')
+source('1_Country_list.R')
 for (country in countries) {   
    # Load politicians and life table data
    setwd(paste('Data/', country, sep =''))
