@@ -13,8 +13,8 @@ library(flexsurv)
 masterpath <- 'C:/Users/adtran/OneDrive - The University of Melbourne/Politicians longevity/GitHub/'
 setwd(masterpath)
 
-source('0_Country_list.R')         # Load a vector of 11 countries
-source('1_Functions.R')            # Load functions for estimating life expectancy
+source('1_Country_list.R')         # Load a vector of 11 countries
+source('2_Functions.R')            # Load functions for estimating life expectancy
 load('data/allPoliticians.Rdata')  # Load survival data of all politicians from 11 countries
 
 num_countries <- length(countries)
