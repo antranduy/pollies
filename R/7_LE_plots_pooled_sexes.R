@@ -113,7 +113,7 @@ p <- ggplot(data = plot.data.legend, aes(x = year, y = expect, ymax = UL, ymin =
    geom_point(size = 1) +
    scale_color_manual(values = c('blue', 'dark red')) +
    scale_x_continuous(name = 'Year', limits = c(1820, 2014)) +
-   scale_y_continuous(name = 'Difference in life expectancy at age 45', limits = c(20, 45)) +
+   scale_y_continuous(name = 'Life expectancy at age 45', limits = c(20, 45)) +
    facet_wrap(~country, ncol = 3, scales = 'free_x')+
    theme_bw() + 
    theme(axis.text = element_text(size = label.fs), 
